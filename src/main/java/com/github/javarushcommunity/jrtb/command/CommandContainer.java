@@ -1,25 +1,26 @@
 package com.github.javarushcommunity.jrtb.command;
 
 import com.github.javarushcommunity.jrtb.service.SendBotMessageService;
+import com.github.javarushcommunity.jrtb.service.TelegramUserService;
 import com.google.common.collect.ImmutableMap;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 import static com.github.javarushcommunity.jrtb.command.CommandName.*;
 
+@RequiredArgsConstructor
+@Component
 public class CommandContainer {
-    private final ImmutableMap<String,Command>commandMap;
-    private final Command unknownCommand;
+    private final List<Command> commands;
+    private final UnknownCommand unknownCommand;
 
-    public CommandContainer(SendBotMessageService sendBotMessageService){
-        commandMap=ImmutableMap.<String,Command>builder()
-                .put(START.getCommandName(),new StartCommand(sendBotMessageService))
-                .put(STOP.getCommandName(), new StopCommand(sendBotMessageService))
-                .put(HELP.getCommandName(), new HelpCommand(sendBotMessageService))
-                .put(NO.getCommandName(), new NoCommand(sendBotMessageService))
-                .build();
-        unknownCommand=new UnknownCommand(sendBotMessageService);
 
-    }
     public Command retrieveCommand(String commandIdentifier){
-        return commandMap.getOrDefault(commandIdentifier,unknownCommand);
+        return commands.stream()
+                .filter(command -> commandIdentifier.equals(command.getCommandIdentifier()))
+                .findFirst()
+                .orElse(unknownCommand);
     }
 }
