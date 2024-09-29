@@ -1,18 +1,23 @@
 package com.github.javarushcommunity.jrtb.command;
 
-import com.github.javarushcommunity.jrtb.service.SendBotMessageService;
-import com.github.javarushcommunity.jrtb.service.SendBotMessageServiceImpl;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-public class NoCommand implements Command{
-    private final SendBotMessageService sendBotMessageService;
+@Component
+@RequiredArgsConstructor
+public class NoCommand extends AbstractCommand{
+
     public static final String NO_MESSAGE="Я поддерживаю команды, начинающиеся со слеша(/).\n"
             + "Чтобы посмотреть список команд введите /help";
-    public NoCommand(SendBotMessageService sendBotMessageService){
-        this.sendBotMessageService=sendBotMessageService;
-    }
     @Override
-    public void execute(Update update) {
-        sendBotMessageService.sendMessage(update.getMessage().getChatId().toString(),NO_MESSAGE);
+    public SendMessage buildResponse(Update update) {
+        return new SendMessage(update.getMessage().getChatId().toString(),NO_MESSAGE);
+    }
+
+    @Override
+    public String getCommandIdentifier() {
+        return "nocommand";
     }
 }
