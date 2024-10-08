@@ -1,7 +1,7 @@
 package com.github.javarushcommunity.jrtb.service;
 
 import com.github.javarushcommunity.jrtb.repository.entity.TelegramUser;
-import com.github.javarushcommunity.jrtb.repository.entity.TelegramUserRepository;
+import com.github.javarushcommunity.jrtb.repository.TelegramUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

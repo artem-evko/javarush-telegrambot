@@ -5,7 +5,8 @@ public enum CommandName {
     HELP("/help"),
     NO("nocommand"),
     STOP("/stop"),
-    STAT("/stat");
+    STAT("/stat"),
+    ADD_GROUP_SUB("/addgroupsub");
     private final String commandName;
     CommandName(String commandName){
         this.commandName=commandName;
