@@ -19,7 +19,7 @@ public class CommandContainer {
 
     public Command retrieveCommand(String commandIdentifier){
         return commands.stream()
-                .filter(command -> commandIdentifier.equals(command.getCommandIdentifier()))
+                .filter(command -> commandIdentifier.equalsIgnoreCase(command.getCommandIdentifier()))
                 .findFirst()
                 .orElse(unknownCommand);
     }
